@@ -1,6 +1,6 @@
 Start a PHP server in this folder
-Use a Flash Player Projector, and connect to: http://<IP>/player_<year>.swf?video_id=<id>
-Example: http://127.0.0.1/player_2005.swf?video_id=jNQXAC9IVRw
+Use a Flash Player Projector, and connect to: http://<IP>/players/player_<year>.swf?video_id=<id>
+Example: http://127.0.0.1/players/player_2005.swf?video_id=jNQXAC9IVRw
 
 Use any FLV video you want, as long as it's in this folder, and it has the video ID as its name
 
