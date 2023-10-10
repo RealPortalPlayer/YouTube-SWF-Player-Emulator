@@ -5,4 +5,15 @@ if [ "$#" -eq 0 ]; then
 	exit
 fi
 
-youtube-dl --recode-video flv -o "$1" "https://www.youtube.com/watch?v=$1" 
+youtubedl=youtube-dl
+
+if ! command -v $youtubedl; then
+	youtubedl=yt-dlp
+fi
+
+if ! command -v $youtubedl; then
+	echo "Cannot find youtube-dl, or yt-dlp"
+	exit 1
+fi
+
+$youtubedl --recode-video flv -o "$1" "https://www.youtube.com/watch?v=$1" 
