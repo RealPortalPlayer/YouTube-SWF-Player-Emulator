@@ -9,6 +9,9 @@ HELP WANTED: Finding unmodified versions of the player is difficult, you can hel
  - 2011 (not extracted)
  - 2012 (not extracted)
  - 2013 (not extracted)
+ 
+The players are the property of YouTube/Google. No copyright infringement intended. This is just a small project trying to get these historical players working again.
+The players *should* not access the real YouTube site at any time, and no login are required.
 
 Requirements:
  - apache
