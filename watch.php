@@ -64,7 +64,7 @@ $source = "/players/player_$version.swf?video_id=$id&l=$length&t=$length";
     
     try {
         hasFlash = Boolean(new ActiveXObject("ShockwaveFlash.ShockwaveFlash"))
-    } catch {
+    } catch (exception) {
         hasFlash = typeof navigator.mimeTypes["application/x-shockwave-flash"] != "undefined"
     }
     
@@ -117,7 +117,7 @@ $source = "/players/player_$version.swf?video_id=$id&l=$length&t=$length";
         try {
             if (flashObject.TGetProperty("/", 8) == undefined)
                 return
-        } catch {
+        } catch (exception) {
             return
         }
         
