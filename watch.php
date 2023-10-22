@@ -48,6 +48,9 @@ if ($version == "2005_v1") {
 
 $length = \FFMpeg\FFProbe::create()->format("$directory/videos/$id.flv")->get("duration");
 $source = "/players/player_$version.swf?video_id=$id&l=$length&t=$length&theme=$theme";
+
+if (isset($_GET["progressColor"]) && $_GET["progressColor"] == "white")
+    $source .= "&color=white";
 ?>
 
 <object id="movie">

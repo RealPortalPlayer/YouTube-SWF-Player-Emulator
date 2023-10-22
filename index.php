@@ -49,7 +49,13 @@ if ($requestedUri == "/watch.php" || $requestedUri == "/watch") {
     <select id="theme" name="theme">
         <option value="dark">Dark</option>
         <option value="light">Light</option>
-    </select>
+    </select><br>
+
+    <label for="progressColor">Progress color:</label>
+    <select id="progressColor" name="progressColor">
+        <option value="normal">Normal</option>
+        <option value="white">White</option>
+    </select><br>
 </form>
 
 Player guide:<br>
