@@ -36,6 +36,10 @@ if ($requestedUri == "/watch.php" || $requestedUri == "/watch") {
     <input type="submit" value="Submit"/><br>
     <input name="width" placeholder="Override Width">
     <input name="height" placeholder="Override Height">
+    <select name="theme">
+        <option value="dark">Dark</option>
+        <option value="light">Light</option>
+    </select>
 </form>
 
 Player guide:<br>

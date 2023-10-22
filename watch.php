@@ -11,6 +11,10 @@ $version = htmlspecialchars($_GET["p"]);
 $directory = getcwd();
 $width = 0;
 $height = 0;
+$theme = "dark";
+
+if (isset($_GET["theme"]))
+    $theme = htmlspecialchars($_GET["theme"]);
 
 if (!file_exists("$directory/players/player_$version.swf")) {
     header("Location: /");
@@ -43,7 +47,7 @@ if ($version == "2005_v1") {
 }
 
 $length = \FFMpeg\FFProbe::create()->format("$directory/videos/$id.flv")->get("duration");
-$source = "/players/player_$version.swf?video_id=$id&l=$length&t=$length";
+$source = "/players/player_$version.swf?video_id=$id&l=$length&t=$length&theme=$theme";
 ?>
 
 <object id="movie">
