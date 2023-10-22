@@ -35,3 +35,17 @@ if ($requestedUri == "/watch.php") {
     </select>
     <input type="submit" value="Submit"/>
 </form>
+
+Videos:<br>
+<?php
+$iterator = new DirectoryIterator("videos");
+foreach ($iterator as $file) {
+    if ($file->isDot() || $file->getExtension() != "flv")
+        continue;
+
+    $id = htmlspecialchars($file->getFilename());
+    $id = substr($id, 0, strpos($id, "."));
+
+    echo "$id<br>";
+}
+?>
