@@ -33,8 +33,21 @@ if ($requestedUri == "/watch.php" || $requestedUri == "/watch") {
         } 
         ?>
     </select>
-    <input type="submit" value="Submit"/>
+    <input type="submit" value="Submit"/><br>
+    <input name="width" placeholder="Override Width">
+    <input name="height" placeholder="Override Height">
 </form>
+
+Player guide:<br>
+2005 v1: 2005<br>
+2005 v2: 2005<br>
+2006 v1: 2006<br>
+2006 v2: 2006-2008<br>
+2008: 2008-2010<br>
+2010: 2010-2011<br>
+2011: 2011-2012<br>
+2012: 2012-2013<br>
+2013: 2013<br><br>
 
 Videos:<br>
 <?php
