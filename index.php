@@ -17,8 +17,11 @@ if ($requestedUri == "/watch.php" || $requestedUri == "/watch") {
 ?>
 
 <form action="/watch.php">
-    <input name="v" placeholder="Video ID"/>
-    <select name="p">
+    <label for="id">Video ID: </label>
+    <input id="id" name="v" placeholder="Video ID"/><br>
+    
+    <label for="version">Player Version: </label>
+    <select id="version" name="p">
         <?php 
         $iterator = new DirectoryIterator("players");
         foreach ($iterator as $file) {
@@ -32,11 +35,18 @@ if ($requestedUri == "/watch.php" || $requestedUri == "/watch") {
             echo "<option value='$playerVersion'>$parsedName</option>";
         } 
         ?>
-    </select>
-    <input type="submit" value="Submit"/><br>
-    <input name="width" placeholder="Override Width">
-    <input name="height" placeholder="Override Height">
-    <select name="theme">
+    </select><br><br>
+    
+    <input type="submit" value="Submit"/><br><br>
+    
+    <label for="width">Override Width: </label>
+    <input id="width" name="width" placeholder="Override Width"><br>
+    
+    <label for="height">Override Height: </label>
+    <input id="height" name="height" placeholder="Override Height"><br>
+    
+    <label for="theme">Theme:</label>
+    <select id="theme" name="theme">
         <option value="dark">Dark</option>
         <option value="light">Light</option>
     </select>
