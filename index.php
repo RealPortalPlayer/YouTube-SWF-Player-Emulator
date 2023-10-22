@@ -4,13 +4,13 @@ $requestedUri = $_SERVER["REQUEST_URI"];
 if (strpos($requestedUri, "?"))
     $requestedUri = substr($requestedUri, 0, strpos($requestedUri, "?"));
 
-if ($requestedUri == "/watch.php") {
+if ($requestedUri == "/watch.php" || $requestedUri == "/watch") {
     require "watch.php";
     die();
 } else if ($requestedUri == "/get_video" || $requestedUri == "/get_video.php" || $requestedUri == "/players/get_video.php") {
     require "get_video.php";
     die();
-} else if ($requestedUri != "/") {
+} else if ($requestedUri != "/" && $requestedUri != "/index.php") {
     header("HTTP/1.0 404 Not Found");
     die();
 }
