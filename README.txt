@@ -1,3 +1,15 @@
+HELP WANTED: Finding unmodified versions of the player is difficult, you can help by searching for old archives of the YouTube site, and extracting their SWF files
+ - Google Video (not extracted, I still want to support it despite not being YouTube)
+ - 2005 (unmodified)
+ - 2005_v2 (unmodified)
+ - 2006 (unconfirmed unmodified)
+ - 2007 (unmodified)
+ - 2008 (not extracted)
+ - 2010 (not extracted)
+ - 2011 (not extracted)
+ - 2012 (not extracted)
+ - 2013 (not extracted)
+
 Requirements:
  - apache
  - ffmpeg (for ffprobe)
