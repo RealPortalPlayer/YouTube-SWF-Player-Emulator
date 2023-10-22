@@ -11,10 +11,10 @@ $version = htmlspecialchars($_GET["p"]);
 $directory = getcwd();
 $width = 0;
 $height = 0;
-$theme = "dark";
+$style = "";
 
-if (isset($_GET["theme"]))
-    $theme = htmlspecialchars($_GET["theme"]);
+if (isset($_GET["playerStyle"]))
+    $style = htmlspecialchars($_GET["playerStyle"]);
 
 if (!file_exists("$directory/players/player_$version.swf")) {
     header("Location: /");
@@ -47,19 +47,23 @@ if ($version == "2005_v1") {
 }
 
 $length = \FFMpeg\FFProbe::create()->format("$directory/videos/$id.flv")->get("duration");
-$source = "/players/player_$version.swf?video_id=$id&l=$length&t=$length";
+$source = "/players/player_$version.swf?video_id=$id&l=$length&t=$length&ps=$style";
 
 if (isset($_GET["light"]) && $_GET["light"] == "on")
     $source .= "&theme=light";
 
 if (isset($_GET["white"]) && $_GET["white"] == "on")
     $source .= "&color=white";
+
+if (isset($_GET["live"]) && $_GET["live"] == "on")
+    $source .= "&live_playback=1";
 ?>
 
 <object id="movie">
     <param value="<?php echo $source ?>"></param>
-    <param name="allowscriptaccess" value="samedomain">
-    <embed name="movie" swliveconnect="true" src="<?php echo $source ?>" type="application/x-shockwave-flash" width="<?php echo $width; ?>" height="<?php echo $height; ?>"></embed>
+    <param name="allowscriptaccess" value="samedomain"></param>
+    <param name="allowFullScreen" value="true"></param>
+    <embed name="movie" swliveconnect="true" allowfullscreen="true" src="<?php echo $source ?>" type="application/x-shockwave-flash" width="<?php echo $width; ?>" height="<?php echo $height; ?>"></embed>
 </object><br>
 
 <span id="warning" style="display: none">

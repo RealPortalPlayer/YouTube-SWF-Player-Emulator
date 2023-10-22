@@ -49,7 +49,42 @@ if ($requestedUri == "/watch.php" || $requestedUri == "/watch") {
     <label for="light"> Light theme</label><br>
 
     <input type="checkbox" id="white" name="white">
-    <label for="white"> White progress bar</label>
+    <label for="white"> White progress bar</label><br>
+
+    <input type="checkbox" id="live" name="live">
+    <label for="live"> Fake live</label><br>
+
+    <label for="playerStyle">Player Style: </label>
+    <select id="playerStyle" name="playerStyle">
+        <option value="docs">Google Docs</option>
+        <option value="books">Google Books</option>
+        <option value="popup">Pop-up</option>
+        <option value="akamai-hd-live">Akamai HD Live</option>
+        <option value="googlemediaads">Google Media Ads</option>
+        <option value="trueview-indisplay-ctp">TrueView In-Display CTP</option>
+        <option value="custom-big">Custom Big</option>
+        <option value="chromeless">Chromeless</option>
+        <option value="custom-small">Custom Small</option>
+        <option value="default">Default</option>
+        <option value="ad">Ad</option>
+        <option value="vevo">Vevo</option>
+        <option value="mobile">Mobile</option>
+        <option value="chromeless-invideo">Chromeless In-video</option>
+        <option value="wii">Wii</option>
+        <option value="google-live">Google Live</option>
+        <option value="play">Play</option>
+        <option value="vevo-embedded">Vevo Embedded</option>
+        <option value="yva">YVA</option> <!-- What does YVA mean? YouTube Video App? -->
+        <option value="blogger">Blogger</option>
+        <option value="disco">Disco</option>
+        <option value="olympics">Olympics</option>
+        <option value="instream">In-stream</option>
+        <option value="live">Live</option>
+        <option value="picasaweb">Picasa Web</option>
+        <option value="testing">Testing</option>
+        <option value="xl">XL</option>
+        <option value="trueview-inslate">TrueView In-slate</option>
+    </select>
 </form>
 
 Player guide:<br>
