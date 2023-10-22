@@ -2,8 +2,8 @@
 require 'vendor/autoload.php';
 
 if (!isset($_GET["v"]) || !isset($_GET["p"])) {
-	header("Location: /");
-	die("Invalid request: <a href='/'>Return</a>");
+    header("Location: /");
+    die("Invalid request: <a href='/'>Return</a>");
 }
 
 $id = htmlspecialchars($_GET["v"]);
@@ -34,6 +34,6 @@ $source = "/players/player_$version.swf?video_id=$id&l=$length&t=$length";
 </script>
 
 <object width="100%" height="100%">
-	<param value="<?php echo $source ?>"></param>
+    <param value="<?php echo $source ?>"></param>
     <embed name="movie" src="<?php echo $source ?>" type="application/x-shockwave-flash" width="100%" height="100%"></embed>
 </object>
