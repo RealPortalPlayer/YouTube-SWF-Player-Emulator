@@ -1,0 +1,15 @@
+{
+  "name": "portalplayer/youtube_swf_emulator",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "PortalPlayer",
+      "email": "email@portalplayer.xyz"
+    }
+  ],
+  "require": {
+    "php-ffmpeg/php-ffmpeg": "^1.1"
+  }
+}

@@ -1,0 +1,4 @@
+DirectoryIndex index.php
+RewriteEngine On
+RewriteRule ^(players(?!/get_video.php)|videos)($|/) - [L]
+RewriteRule . index.php [L]
