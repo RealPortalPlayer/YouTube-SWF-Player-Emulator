@@ -45,17 +45,11 @@ if ($requestedUri == "/watch.php" || $requestedUri == "/watch") {
     <label for="height">Override Height: </label>
     <input id="height" name="height" placeholder="Override Height"><br>
     
-    <label for="theme">Theme:</label>
-    <select id="theme" name="theme">
-        <option value="dark">Dark</option>
-        <option value="light">Light</option>
-    </select><br>
+    <input type="checkbox" id="light" name="light">
+    <label for="light"> Light theme</label><br>
 
-    <label for="progressColor">Progress color:</label>
-    <select id="progressColor" name="progressColor">
-        <option value="normal">Normal</option>
-        <option value="white">White</option>
-    </select><br>
+    <input type="checkbox" id="white" name="white">
+    <label for="white"> White progress bar</label>
 </form>
 
 Player guide:<br>
