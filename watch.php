@@ -28,7 +28,28 @@ $source = "/players/player_$version.swf?video_id=$id&l=$length&t=$length";
     <param value="<?php echo $source ?>"></param>
     <param name="allowscriptaccess" value="samedomain">
     <embed name="movie" swliveconnect="true" src="<?php echo $source ?>" type="application/x-shockwave-flash"></embed>
-</object>
+</object><br>
+
+<span id="warning" style="display: none">
+    You might not have Flash installed.<br>
+    You can either go with the official Flash, or with Ruffle.<br>
+    Please note that Ruffle isn't guaranteed to work, but it is 100% more secure.<br><br>
+    <a href="https://chrome.google.com/webstore/detail/ruffle-flash-emulator/donbcfbmhbcapadipfkeojnmajbakjdc">Chrome Ruffle</a><br>
+    <a href="https://addons.mozilla.org/en-US/firefox/addon/ruffle_rs">Firefox Ruffle</a><br>
+    <a href="https://microsoftedge.microsoft.com/addons/detail/ruffle-flash-emulator/pipjjbgofgieknlpefmcckdmgaaegban">Edge Ruffle (Chromium)</a><br>
+    <a href="https://archive.org/details/clean-flash-34.0.0.175-installer">CleanFlash</a><br>
+    <a href="https://archive.org/details/flashplayer_old">Archived Flash</a><br><br>
+    Differences:<br>
+    Flash might be discontinued here, but it isn't in China. The cleaned version is the chinese version,<br>
+    minus all the spyware and adware. Recommended since it comes bundled with new security updates, but not required.<br>
+    It's up to your own judgement.<br><br>
+    Do have Flash installed? Your browser might not support it then. Download one of these browsers:<br>
+    <a href="https://ungoogled-software.github.io/ungoogled-chromium-binaries/releases/windows/64bit/67.0.3396.87-3">Ungoogled Chrome 67.0.3396.87-3 64-bit</a> Recommended, Chromium always ran best with Flash, even if I don't like Chrome<br>
+    <a href="https://ftp.mozilla.org/pub/firefox/releases/84.0/win64/en-US/Firefox%20Setup%2084.0.exe">Firefox 84.0 64-bit</a><br>
+    <a href="https://ftp.mozilla.org/pub/firefox/releases/84.0/win32/en-US/Firefox%20Setup%2084.0.exe">Firefox 84.0 86-bit</a>
+</span>
+
+<span id="ruffleWarning" style="display: none">Ruffle detected, don't report any bugs, unless they replicate with the official Flash player as well.</span>
 
 <script>
     console.log("Debug information")
@@ -37,6 +58,32 @@ $source = "/players/player_$version.swf?video_id=$id&l=$length&t=$length";
     console.log("Video: <?php echo $directory; ?>/videos/<?php echo $id; ?>.flv")
     console.log("Length: <?php echo $length; ?>")
     console.log("Source: <?php echo $source; ?>")
+    
+    var hasFlash
+    var isRuffle
+    
+    try {
+        hasFlash = Boolean(new ActiveXObject("ShockwaveFlash.ShockwaveFlash"))
+    } catch {
+        hasFlash = typeof navigator.mimeTypes["application/x-shockwave-flash"] != "undefined"
+    }
+    
+    if (!hasFlash) {
+        console.log("Flash might not be installed")
+        document.getElementById("warning").style.display = "block"
+
+        var ruffleDetection = setInterval(function() {
+            if (document.getElementsByTagName("ruffle-embed").length == 0)
+                return
+            
+            isRuffle = true
+            
+            console.log("Ruffle detected")
+            document.getElementById("warning").style.display = "none"
+            document.getElementById("ruffleWarning").style.display = "block"
+            clearInterval(ruffleDetection)
+        })
+    }
     
     var flashObject = null
     
@@ -55,19 +102,25 @@ $source = "/players/player_$version.swf?video_id=$id&l=$length&t=$length";
     console.log("Object: " + flashObject)
 
     if (flashObject == null)
-        throw new Error("Cannot find flash object")
+        throw new Error("Cannot find Flash object")
     
-    console.log("Waiting for flash to be ready")
+    console.log("Waiting for Flash to be ready")
     
     // TODO: Think of a better way to do this
-    var interval = setInterval(function() {
+    var flashSizing = setInterval(function() {
+        if (isRuffle) {
+            console.log("Flash ready, but no need to get width/height")
+            clearInterval(flashSizing)
+            return
+        }
+        
         try {
             if (flashObject.TGetProperty("/", 8) == undefined)
                 return
         } catch {
             return
         }
-
+        
         console.log("Flash ready")
 
         var width = flashObject.TGetProperty("/", 8)
@@ -79,6 +132,6 @@ $source = "/players/player_$version.swf?video_id=$id&l=$length&t=$length";
         flashObject.style.width = width + "px"
         flashObject.style.height = height + "px"
         
-        clearInterval(interval)
+        clearInterval(flashSizing)
     })
 </script>

@@ -26,7 +26,7 @@ You need the apache server to allow .htaccess, and the rewrite rule.
 Install all the dependencies by running: composer install.
 Install this into your apache htdocs folder.
 You can now specify what video ID you want to watch, and on what player version.
-This can work with Ruffles, but it works best with the native Flash player.
+This can work with Ruffle, but it works best with the native Flash player.
 
 Some players might not work out of the box. To get them to work, first edit your apache vhosts file.
  - Windows: C:\xampp\apache\conf\extra\httpd-vhosts.conf
@@ -48,7 +48,7 @@ Then edit your hosts file to add: 127.0.0.1 www.youtube.com
 
 Download YouTube videos by calling youtube-dl-script.sh with the video ID. Example: youtube-dl-script.sh jNQXAC9IVRw
 
-Ruffles: Not recommended, can contain bugs that are not replicated on real Flash, but it's 100% more secure
+Ruffle: Not recommended, can contain bugs that are not replicated on real Flash, but it's 100% more secure
 Chrome: https://chrome.google.com/webstore/detail/ruffle-flash-emulator/donbcfbmhbcapadipfkeojnmajbakjdc
 Firefox: https://addons.mozilla.org/en-US/firefox/addon/ruffle_rs/
 Edge (chromium): https://microsoftedge.microsoft.com/addons/detail/ruffle-flash-emulator/pipjjbgofgieknlpefmcckdmgaaegban
