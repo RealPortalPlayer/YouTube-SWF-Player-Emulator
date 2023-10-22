@@ -1,17 +1,26 @@
+Player Guide:
+ - player_2005_v1: 2005
+ - player_2005_v2: 2005
+ - player_2006_v1: 2006
+ - player_2006_v2: 2006-2008
+ - player_2008: 2008-2010
+ - player_2010: 2010-2011
+ - player_2011: 2011-2012
+ - player_2012: 2012-2013
+ - player_2013: 2013
+
 HELP WANTED: Finding unmodified versions of the player is difficult, you can help by searching for old archives of the YouTube site, and extracting their SWF files
  - Google Video (not extracted, I still want to support it despite not being YouTube)
- - 2005 (unmodified)
- - 2005_v2 (unmodified)
- - 2006 (unconfirmed unmodified)
- - 2007 (unmodified)
- - 2010 (unmodified)
- - 2011 (not extracted)
- - 2012 (not extracted)
- - 2013 (not extracted)
+ - 2005_v1
+ - 2005_v2
+ - 2006_v1 (unconfirmed unmodified)
+ - 2006_v2
+ - 2008
+ - 2010
+ - 2011
+ - 2012
+ - 2013
 
-Versions to suspect not exist: Some archives claim that these exist, but sources claim otherwise (i.e. archives of YouTube not containing it)
- - 2008 (might not change, probably just the 2007 version)
-  
 The players are the property of YouTube/Google. No copyright infringement intended. This is just a small project trying to get these historical players working again.
 No login are required.
 
