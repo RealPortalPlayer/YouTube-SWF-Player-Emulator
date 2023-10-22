@@ -84,6 +84,22 @@ if ($requestedUri == "/watch.php" || $requestedUri == "/watch") {
         <option value="testing">Testing</option>
         <option value="xl">XL</option>
         <option value="trueview-inslate">TrueView In-slate</option>
+    </select><br>
+
+    <label for="eventLabel">Event Label: </label>
+    <select id="eventLabel" name="eventLabel">
+        <option value="previewpage">Preview Page</option>
+        <option value="embedded">Embedded</option>
+        <option value="leanback">Lean Back</option>
+        <option value="videoeditor">Video Editor</option>
+        <option value="mole">Mole</option>
+        <option value="popout">Pop-out</option>
+        <option value="leaf">Leaf</option>
+        <option value="editpage">Edit Page</option>
+        <option value="adunit">Ad Unit</option>
+        <option value="preview">Preview</option>
+        <option value="profilepage">Profile Page</option>
+        <option value="detailpage">Detail Page</option>
     </select>
 </form>
 

@@ -12,9 +12,13 @@ $directory = getcwd();
 $width = 0;
 $height = 0;
 $style = "";
+$label = "";
 
 if (isset($_GET["playerStyle"]))
     $style = htmlspecialchars($_GET["playerStyle"]);
+
+if (isset($_GET["eventLabel"]))
+    $label = htmlspecialchars($_GET["eventLabel"]);
 
 if (!file_exists("$directory/players/player_$version.swf")) {
     header("Location: /");
@@ -47,7 +51,7 @@ if ($version == "2005_v1") {
 }
 
 $length = \FFMpeg\FFProbe::create()->format("$directory/videos/$id.flv")->get("duration");
-$source = "/players/player_$version.swf?video_id=$id&l=$length&t=$length&ps=$style";
+$source = "/players/player_$version.swf?video_id=$id&l=$length&t=$length";
 
 if (isset($_GET["light"]) && $_GET["light"] == "on")
     $source .= "&theme=light";
@@ -57,6 +61,12 @@ if (isset($_GET["white"]) && $_GET["white"] == "on")
 
 if (isset($_GET["live"]) && $_GET["live"] == "on")
     $source .= "&live_playback=1";
+
+if (!empty($style))
+    $source .= "&ps=$source";
+
+if (!empty($label))
+    $label .= "&el=$label";
 ?>
 
 <object id="movie">
