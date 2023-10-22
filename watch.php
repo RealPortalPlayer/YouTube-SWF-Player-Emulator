@@ -10,13 +10,19 @@ $id = htmlspecialchars($_GET["v"]);
 $version = htmlspecialchars($_GET["p"]);
 $directory = getcwd();
 $length = \FFMpeg\FFProbe::create()->format("$directory/videos/$id.flv")->get("duration");
-
-echo "ID: $id<br>";
-echo "Player: $version<br>";
-echo "Video: $directory/videos/$id.flv<br>";
-echo "Length: $length<br>";
+$source = "/players/player_$version.swf?video_id=$id&l=$length&t=$length";
 ?>
 
-<object type="application/x-shockwave-flash" width="100%" height="100%">
-	<param name="movie" value="/players/player_<?php echo $version; ?>.swf?video_id=<?php echo $id; ?>&l=<?php echo $length; ?>&t=<?php echo $length; ?>"></param>
+<script>
+    console.log("Debug information")
+    console.log("ID: <?php echo $id; ?>")
+    console.log("Player: <?php echo $version; ?>")
+    console.log("Video: <?php echo $directory; ?>/videos/<?php echo $id; ?>.flv")
+    console.log("Length: <?php echo $length; ?>")
+    console.log("Source: <?php echo $source; ?>")
+</script>
+
+<object width="100%" height="100%">
+	<param value="<?php echo $source ?>"></param>
+    <embed name="movie" src="<?php echo $source ?>" type="application/x-shockwave-flash" width="100%" height="100%"></embed>
 </object>
