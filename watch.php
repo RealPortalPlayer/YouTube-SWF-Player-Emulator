@@ -61,6 +61,16 @@ $source = "/players/player_$version.swf?video_id=$id&l=$length&t=$length";
     
     var hasFlash
     var isRuffle
+    var queries = {}
+
+    {
+        var url = document.location.search
+        var regex = /[?&]?([^=]+)=([^&]*)/g
+        var tokens
+        
+        while (tokens = regex.exec(url))
+            queries[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2])
+    }
     
     try {
         hasFlash = Boolean(new ActiveXObject("ShockwaveFlash.ShockwaveFlash"))
@@ -106,32 +116,41 @@ $source = "/players/player_$version.swf?video_id=$id&l=$length&t=$length";
     
     console.log("Waiting for Flash to be ready")
     
-    // TODO: Think of a better way to do this
-    var flashSizing = setInterval(function() {
-        if (isRuffle) {
-            console.log("Flash ready, but no need to get width/height")
-            clearInterval(flashSizing)
-            return
-        }
-        
-        try {
-            if (flashObject.TGetProperty("/", 8) == undefined)
+    if (queries.width && queries.height && !isNaN(queries.width) && !isNaN(queries.height)) {
+        console.log("No need, already got width and height")
+        console.log("Width: " + queries.width)
+        console.log("Height: " + queries.height)
+
+        flashObject.style.width = queries.width + "px"
+        flashObject.style.height = queries.height + "px"
+    } else {
+        // TODO: Think of a better way to do this
+        var flashSizing = setInterval(function() {
+            if (isRuffle) {
+                console.log("Flash ready, but no need to get width/height")
+                clearInterval(flashSizing)
                 return
-        } catch (exception) {
-            return
-        }
-        
-        console.log("Flash ready")
+            }
 
-        var width = flashObject.TGetProperty("/", 8)
-        var height = flashObject.TGetProperty("/", 9)
+            try {
+                if (flashObject.TGetProperty("/", 8) == undefined)
+                    return
+            } catch (exception) {
+                return
+            }
 
-        console.log("Width: " + width)
-        console.log("Height: " + height)
+            console.log("Flash ready")
 
-        flashObject.style.width = width + "px"
-        flashObject.style.height = height + "px"
-        
-        clearInterval(flashSizing)
-    })
+            var width = flashObject.TGetProperty("/", 8)
+            var height = flashObject.TGetProperty("/", 9)
+
+            console.log("Width: " + width)
+            console.log("Height: " + height)
+
+            flashObject.style.width = width + "px"
+            flashObject.style.height = height + "px"
+
+            clearInterval(flashSizing)
+        })
+    }
 </script>
