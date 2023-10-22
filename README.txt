@@ -43,6 +43,11 @@ minus all the spyware and adware. Recommended since it comes bundled with new se
 It's up to your own judgement.
 
 The current browsers do not support Flash, use this:
-https://ungoogled-software.github.io/ungoogled-chromium-binaries/releases/windows/64bit/67.0.3396.87-3
+ Ungoogled Chromium:
+  64bit: https://ungoogled-software.github.io/ungoogled-chromium-binaries/releases/windows/64bit/67.0.3396.87-3
+
+ Firefox:
+  64bit: https://ftp.mozilla.org/pub/firefox/releases/84.0/win64/en-US/Firefox%20Setup%2084.0.exe
+  86bit: https://ftp.mozilla.org/pub/firefox/releases/84.0/win32/en-US/Firefox%20Setup%2084.0.exe
 
 Linux/macOS users can use Wine for Flash, and the browser
