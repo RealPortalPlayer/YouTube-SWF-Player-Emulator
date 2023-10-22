@@ -9,6 +9,8 @@ if (!isset($_GET["v"]) || !isset($_GET["p"])) {
 $id = htmlspecialchars($_GET["v"]);
 $version = htmlspecialchars($_GET["p"]);
 $directory = getcwd();
+$width = 0;
+$height = 0;
 
 if (!file_exists("$directory/players/player_$version.swf")) {
     header("Location: /");
@@ -20,6 +22,26 @@ if (!file_exists("$directory/videos/$id.flv")) {
     die("Invalid video ID: <a href='/'>Return</a>");
 }
 
+if ($version == "2005_v1") {
+    $width = 690;
+    $height = 475;
+} else if ($version == "2005_v2" || $version == "2006_v1") {
+    $width = 470;
+    $height = 390;
+} else if ($version == "2006_v2") {
+    $width = 450;
+    $height = 370;
+} else if ($version == "2008") {
+    $width = 480;
+    $height = 385;
+} else if ($version == "2010") {
+    $width = 640;
+    $height = 385;
+} else if ($version == "2011" || $version == "2012" || $version == "2013") {
+    $width = 640;
+    $height = 390;
+}
+
 $length = \FFMpeg\FFProbe::create()->format("$directory/videos/$id.flv")->get("duration");
 $source = "/players/player_$version.swf?video_id=$id&l=$length&t=$length";
 ?>
@@ -27,7 +49,7 @@ $source = "/players/player_$version.swf?video_id=$id&l=$length&t=$length";
 <object id="movie">
     <param value="<?php echo $source ?>"></param>
     <param name="allowscriptaccess" value="samedomain">
-    <embed name="movie" swliveconnect="true" src="<?php echo $source ?>" type="application/x-shockwave-flash"></embed>
+    <embed name="movie" swliveconnect="true" src="<?php echo $source ?>" type="application/x-shockwave-flash" width="<?php echo $width; ?>" height="<?php echo $height; ?>"></embed>
 </object><br>
 
 <span id="warning" style="display: none">
@@ -114,43 +136,11 @@ $source = "/players/player_$version.swf?video_id=$id&l=$length&t=$length";
     if (flashObject == null)
         throw new Error("Cannot find Flash object")
     
-    console.log("Waiting for Flash to be ready")
-    
     if (queries.width && queries.height && !isNaN(queries.width) && !isNaN(queries.height)) {
-        console.log("No need, already got width and height")
         console.log("Width: " + queries.width)
         console.log("Height: " + queries.height)
 
         flashObject.style.width = queries.width + "px"
         flashObject.style.height = queries.height + "px"
-    } else {
-        // TODO: Think of a better way to do this
-        var flashSizing = setInterval(function() {
-            if (isRuffle) {
-                console.log("Flash ready, but no need to get width/height")
-                clearInterval(flashSizing)
-                return
-            }
-
-            try {
-                if (flashObject.TGetProperty("/", 8) == undefined)
-                    return
-            } catch (exception) {
-                return
-            }
-
-            console.log("Flash ready")
-
-            var width = flashObject.TGetProperty("/", 8)
-            var height = flashObject.TGetProperty("/", 9)
-
-            console.log("Width: " + width)
-            console.log("Height: " + height)
-
-            flashObject.style.width = width + "px"
-            flashObject.style.height = height + "px"
-
-            clearInterval(flashSizing)
-        })
     }
 </script>
