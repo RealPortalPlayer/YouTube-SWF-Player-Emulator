@@ -1,5 +1,7 @@
 <?php
 require 'vendor/autoload.php';
+require_once "flash_arguments.php";
+global $arguments;
 
 if (!isset($_GET["v"]) || !isset($_GET["p"])) {
     header("Location: /");
@@ -11,14 +13,6 @@ $version = htmlspecialchars($_GET["p"]);
 $directory = getcwd();
 $width = 0;
 $height = 0;
-$style = "";
-$label = "";
-
-if (isset($_GET["playerStyle"]))
-    $style = htmlspecialchars($_GET["playerStyle"]);
-
-if (isset($_GET["eventLabel"]))
-    $label = htmlspecialchars($_GET["eventLabel"]);
 
 if (!file_exists("$directory/players/player_$version.swf")) {
     header("Location: /");
@@ -53,20 +47,27 @@ if ($version == "2005_v1") {
 $length = \FFMpeg\FFProbe::create()->format("$directory/videos/$id.flv")->get("duration");
 $source = "/players/player_$version.swf?video_id=$id&l=$length&t=$length";
 
-if (isset($_GET["light"]) && $_GET["light"] == "on")
-    $source .= "&theme=light";
-
-if (isset($_GET["white"]) && $_GET["white"] == "on")
-    $source .= "&color=white";
-
-if (isset($_GET["live"]) && $_GET["live"] == "on")
-    $source .= "&live_playback=1";
-
-if (!empty($style))
-    $source .= "&ps=$source";
-
-if (!empty($label))
-    $label .= "&el=$label";
+foreach ($arguments as $name => $settings) {
+    $type = $settings["type"] == "boolean";
+    
+    if (empty($_GET[$name])) {
+        if ($type)
+            $source .= "&$name=0";
+        
+        continue;
+    }
+    
+    if ($type) {
+        if ($_GET[$name] == "on")
+            $source .= "&$name=1";
+        else
+            $source .= "&$name=0";
+        continue;
+    }
+    
+    $value = htmlspecialchars($_GET[$name]);
+    $source .= "&$name=$value";
+} 
 ?>
 
 <object id="movie">

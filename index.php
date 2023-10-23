@@ -1,4 +1,7 @@
 <?php
+require_once "flash_arguments.php";
+global $arguments;
+
 $requestedUri = $_SERVER["REQUEST_URI"];
 
 if (strpos($requestedUri, "?"))
@@ -16,12 +19,24 @@ if ($requestedUri == "/watch.php" || $requestedUri == "/watch") {
 }
 ?>
 
+<script>
+    function selected() {
+        var version = document.getElementById("version").value
+        var elements = document.getElementsByClassName("option")
+
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].disabled = !elements[i].className.includes(version)
+            elements[i].hidden = elements[i].disabled
+        }
+    }
+</script>
+
 <form action="/watch.php">
     <label for="id">Video ID: </label>
-    <input id="id" name="v" placeholder="Video ID"/><br>
+    <input id="id" name="v"/><br>
     
     <label for="version">Player Version: </label>
-    <select id="version" name="p">
+    <select id="version" name="p" onchange="selected()">
         <?php 
         $iterator = new DirectoryIterator("players");
         foreach ($iterator as $file) {
@@ -40,67 +55,66 @@ if ($requestedUri == "/watch.php" || $requestedUri == "/watch") {
     <input type="submit" value="Submit"/><br><br>
     
     <label for="width">Override Width: </label>
-    <input id="width" name="width" placeholder="Override Width"><br>
+    <input id="width" name="width" type="number"><br>
     
     <label for="height">Override Height: </label>
-    <input id="height" name="height" placeholder="Override Height"><br>
+    <input id="height" name="height" type="number"><br>
+
+    <input type="checkbox" id="live_playback" name="live_playback">
+    <label for="live_playback"> Live</label><br><br>
     
-    <input type="checkbox" id="light" name="light">
-    <label for="light"> Light theme</label><br>
-
-    <input type="checkbox" id="white" name="white">
-    <label for="white"> White progress bar</label><br>
-
-    <input type="checkbox" id="live" name="live">
-    <label for="live"> Fake live</label><br>
-
-    <label for="playerStyle">Player Style: </label>
-    <select id="playerStyle" name="playerStyle">
-        <option value="docs">Google Docs</option>
-        <option value="books">Google Books</option>
-        <option value="popup">Pop-up</option>
-        <option value="akamai-hd-live">Akamai HD Live</option>
-        <option value="googlemediaads">Google Media Ads</option>
-        <option value="trueview-indisplay-ctp">TrueView In-Display CTP</option>
-        <option value="custom-big">Custom Big</option>
-        <option value="chromeless">Chromeless</option>
-        <option value="custom-small">Custom Small</option>
-        <option value="default">Default</option>
-        <option value="ad">Ad</option>
-        <option value="vevo">Vevo</option>
-        <option value="mobile">Mobile</option>
-        <option value="chromeless-invideo">Chromeless In-video</option>
-        <option value="wii">Wii</option>
-        <option value="google-live">Google Live</option>
-        <option value="play">Play</option>
-        <option value="vevo-embedded">Vevo Embedded</option>
-        <option value="yva">YVA</option> <!-- What does YVA mean? YouTube Video App? -->
-        <option value="blogger">Blogger</option>
-        <option value="disco">Disco</option>
-        <option value="olympics">Olympics</option>
-        <option value="instream">In-stream</option>
-        <option value="live">Live</option>
-        <option value="picasaweb">Picasa Web</option>
-        <option value="testing">Testing</option>
-        <option value="xl">XL</option>
-        <option value="trueview-inslate">TrueView In-slate</option>
-    </select><br>
-
-    <label for="eventLabel">Event Label: </label>
-    <select id="eventLabel" name="eventLabel">
-        <option value="previewpage">Preview Page</option>
-        <option value="embedded">Embedded</option>
-        <option value="leanback">Lean Back</option>
-        <option value="videoeditor">Video Editor</option>
-        <option value="mole">Mole</option>
-        <option value="popout">Pop-out</option>
-        <option value="leaf">Leaf</option>
-        <option value="editpage">Edit Page</option>
-        <option value="adunit">Ad Unit</option>
-        <option value="preview">Preview</option>
-        <option value="profilepage">Profile Page</option>
-        <option value="detailpage">Detail Page</option>
-    </select>
+    YouTube Environment:<br>
+    <?php
+    foreach ($arguments as $name => $settings) {
+        $default = $settings["default"];
+        $pretty_name = $settings["pretty_name"];
+        $type = $settings["type"];
+        
+        echo "<div class='option " . $settings["target"] . "'>";
+        
+        switch ($type) {
+            case "boolean":
+                echo "<input type='checkbox' id='$name' name='$name'";
+                
+                if (!empty($default))
+                    echo " checked";
+                
+                echo ">";
+                echo "<label for='$name'> $pretty_name</label>";
+                break;
+                
+            case "url":
+            case "text":
+            case "number":
+                echo "<label for='$name'>$pretty_name: </label>";
+                echo "<input type='$type' id='$name' name='$name' value='$default'>";
+                break;
+                
+            case "options":
+                echo "<label for='$name'>$pretty_name: </label>";
+                echo "<select id='$name' name='$name'>";
+                
+                foreach ($settings["values"] as $value_name => $value_settings) {
+                    $value_target = $value_settings["target"];
+                    
+                    echo "<option ";
+                    
+                    if (!empty($value_target))
+                        echo "class='option $value_target' ";
+                    
+                    if ($default == $value_name)
+                        echo "selected ";
+                    
+                    echo "value='$value_name'>" . $value_settings["pretty_name"] . "</option>";
+                }
+                
+                echo "</select>";
+                break;
+        }
+        
+        echo "</div>";
+    }
+    ?>
 </form>
 
 Player guide:<br>
@@ -127,3 +141,7 @@ foreach ($iterator as $file) {
     echo "$id<br>";
 }
 ?>
+
+<script>
+    selected()
+</script>
