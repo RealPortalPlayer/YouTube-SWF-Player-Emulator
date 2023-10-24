@@ -39,7 +39,7 @@ if ($version == "2005_v1") {
 } else if ($version == "2010") {
     $width = 640;
     $height = 385;
-} else if ($version == "2011" || $version == "2012" || $version == "2013") {
+} else if ($version == "2011" || $version == "2012" || $version == "2013" || $version == "google") { // Google player dynamically resizes
     $width = 640;
     $height = 390;
 }
@@ -48,20 +48,32 @@ $length = \FFMpeg\FFProbe::create()->format("$directory/videos/$id.flv")->get("d
 $source = "/players/player_$version.swf?video_id=$id&l=$length&t=$length";
 
 foreach ($arguments as $name => $settings) {
-    $type = $settings["type"] == "boolean";
+    if (!strpos($settings["target"], $version) && (!isset($_GET["showAll"]) || $_GET["showAll"] != "on"))
+        continue;
+    
+    $type = $settings["type"];
+    $ignore_empty = $settings["ignore_empty"];
+    
+    if (isset($ignore_empty[$version]))
+        $ignore_empty = $ignore_empty[$version];
+    else if (isset($ignore_empty["*"]))
+        $ignore_empty = $ignore_empty["*"];
+    else
+        $ignore_empty = false;
     
     if (empty($_GET[$name])) {
-        if ($type)
+        if ($type == "boolean" && !$ignore_empty)
             $source .= "&$name=0";
         
         continue;
     }
     
-    if ($type) {
+    if ($type == "boolean") {
         if ($_GET[$name] == "on")
             $source .= "&$name=1";
-        else
+        else if (!$ignore_empty)
             $source .= "&$name=0";
+        
         continue;
     }
     
@@ -70,11 +82,26 @@ foreach ($arguments as $name => $settings) {
 } 
 ?>
 
-<object id="movie">
-    <param value="<?php echo $source ?>"></param>
-    <param name="allowscriptaccess" value="samedomain"></param>
-    <param name="allowFullScreen" value="true"></param>
-    <embed name="movie" swliveconnect="true" allowfullscreen="true" src="<?php echo $source ?>" type="application/x-shockwave-flash" width="<?php echo $width; ?>" height="<?php echo $height; ?>"></embed>
+<object id="movie" width="<?php echo $width; ?>" height="<?php echo $height; ?>">
+    <param name="movie" value="<?php echo $source ?>">
+    <param name="quality" value="high">
+    <param name="play" value="true">
+    <param name="allowFullScreen" value="true">
+    <param name="type" value="application/x-shockwave-flash">
+    <param name="width" value="<?php echo $width ?>">
+    <param name="height" value="<?php echo $height ?>">
+    <param name="frameBorder" value="0">
+    <param name="swLiveConnect" value="true">
+    <embed name="movie"
+           quality="high"
+           play="true"
+           allowfullscreen="true" 
+           src="<?php echo $source ?>"
+           type="application/x-shockwave-flash"
+           width="<?php echo $width; ?>px"
+           height="<?php echo $height; ?>px"
+           frameborder="0"
+           swliveconnect="true">
 </object><br>
 
 <span id="warning" style="display: none">
